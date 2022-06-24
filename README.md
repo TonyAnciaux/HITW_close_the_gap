@@ -1,20 +1,17 @@
 # HITW_close_the_gap
 
 ## The context
-This project has been realized in the context of the hackathon [Hack In The Woods 2022](https://www.hackinthewoods.be/) by 
+This project has been realized in the context of the hackathon [Hack In The Woods 2022](https://www.hackinthewoods.be/) for the organization [Close The Gap](https://www.close-the-gap.org/)
 
 
 ## The Project
-The project was proposed by the organization [Close The Gap](https://www.close-the-gap.org/)
 
-### Project description
-
-###### What does the repackaging data tell us?
+#### What does the repackaging data tell us?
 
 Close the Gap coordinates the collection, refurbishment and shipment of electronic equipment so
 that it can be used again for social projects.
 
-##### How does it work?
+#### How does it work?
 1. The NGO receives a request to send equipment, sometimes with a list of the equipment;
 2. The NGO picks up the equipment and sends it to one of its three reconditioning partners;
 3. It receives a list of the material that has been reconditioned, a different format for each partner;
