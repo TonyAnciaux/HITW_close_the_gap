@@ -11,7 +11,7 @@ from werkzeug.utils import secure_filename
 from utils.preprocessing import DfFormating
 
 
-UPLOAD_FOLDER = "../uploads"
+UPLOAD_FOLDER = "uploads"
 
 ALLOWED_EXTENSIONS = {'xls', 'xlsx'}
 
