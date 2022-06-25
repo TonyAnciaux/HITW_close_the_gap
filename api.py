@@ -10,7 +10,7 @@ from werkzeug.utils import secure_filename
 
 from utils.preprocessing import DfFormating
 
-UPLOAD_FOLDER = "../uploads"
+UPLOAD_FOLDER = "uploads"
 ALLOWED_EXTENSIONS = {'xls', 'xlsx'}
 
 app = Flask(__name__)
@@ -19,6 +19,7 @@ app.secret_key = 'kivanc'
 
 @app.route("/", methods=['GET', 'POST'])
 def home():
+    
     return render_template("index.html")
 
 def allowed_file(filename):
@@ -46,13 +47,12 @@ def upload_file():
             dname = request.form['dname']
             file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             file.save(file_path)
-            data_xls = pd.read_excel(f, sheet_name=None)
-            df = pd.DataFrame([data_xls])
-
+            # data_xls = pd.read_excel(f, sheet_name=None)
+            # df = pd.DataFrame([data_xls])
             dfFormater = DfFormating(file_path)
             # @ToDo: Test it and change to redirect upload.html
-            return df.to_html()
-    return render_template('upload.html')
+            return "Uploaded successfuly" # df.to_html()
+    return render_template('index.html')
 
 @app.route('/uploads/<filename>')
 def upload(filename):
