@@ -1,17 +1,16 @@
 """
 A File that manage to FLASK API opearation which is gather the excel file from user
 """
-
 import os
-import json
 import pandas as pd
-import openpyxl
 
 
-from flask import Flask, request, send_from_directory, redirect, flash, url_for, render_template
+from flask import Flask, request, send_from_directory, redirect, flash, render_template
 from werkzeug.utils import secure_filename
 
-UPLOAD_FOLDER = "uploads"
+from utils.preprocessing import DfFormating
+
+UPLOAD_FOLDER = "../uploads"
 ALLOWED_EXTENSIONS = {'xls', 'xlsx'}
 
 app = Flask(__name__)
@@ -20,7 +19,7 @@ app.secret_key = 'kivanc'
 
 @app.route("/", methods=['GET', 'POST'])
 def home():
-    return render_template("upload.html")
+    return render_template("index.html")
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -44,11 +43,15 @@ def upload_file():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             f = request.files['file']
+            dname = request.form['dname']
             file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             file.save(file_path)
-            # data_xls = pd.read_excel(f)
-            data_xl = openpyxl.load_workbook(filename=file_path)
-            return 'upload successfully'
+            data_xls = pd.read_excel(f, sheet_name=None)
+            df = pd.DataFrame([data_xls])
+
+            dfFormater = DfFormating(file_path)
+            # @ToDo: Test it and change to redirect upload.html
+            return df.to_html()
     return render_template('upload.html')
 
 @app.route('/uploads/<filename>')
