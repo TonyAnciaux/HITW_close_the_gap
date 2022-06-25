@@ -1,4 +1,3 @@
-from traceback import print_tb
 import pandas as pd
 import numpy as np
 
@@ -91,7 +90,7 @@ class DfFormating:
         df['Type_calc'] = df["Type"].map(self.types).fillna('Others')
         self.final_df = df
         print(self.final_df["Type_calc"].value_counts())
-        self.final_df.to_csv('../uploads/final_df.csv', index=False)
+        self.final_df.to_csv('uploads/final_df.csv', index=False)
         return self.final_df
 
 # dfForm = DfFormating('../uploads/CTG_-_0616_DONOR_11_ENGINERING_REPORT.xlsx')
