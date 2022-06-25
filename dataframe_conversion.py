@@ -3,6 +3,11 @@ import numpy as np
 
 
 class DfFormating:
+    """
+    input: path of Excel file
+    Class to standardize Excel files into a Dataframe
+    output: csv file
+    """
 
     def __init__(self, path, donor=None):
 
@@ -40,7 +45,9 @@ class DfFormating:
             self.tes_parsing()
 
     def lb_parsing(self):
-
+        """
+        Parses excels files to pd DataFrame from CTG Circular folder style
+        """
         df = pd.read_excel(self.path, header=[2])
         new = df["Specifications"].str.split(",", expand=True)[0][:2]
         df["Processor"] = str(new[0]) + "," + str(new[1])
@@ -51,6 +58,9 @@ class DfFormating:
         self.create_df()
 
     def ct_parsing(self):
+        """
+        Parses excels files to pd DataFrame from PlanBit folder style
+        """
 
         df = pd.read_excel(self.path)
         df["Defects"] = df["Defect 1"] + "," + df["Defect 2"] + "," + df["Defect 3"] + "," + df["Defect 4"] + "," + df[
@@ -62,6 +72,9 @@ class DfFormating:
         self.create_df()
 
     def tes_parsing(self):
+        """
+        Parses excels files to pd DataFrame from TES folder style
+        """
 
         df = pd.read_excel(self.path, header=[18])
         df["Donor"] = pd.read_excel(self.path, usecols="B", header=None, names=["Donor"]).iloc[2]["Donor"]
@@ -69,6 +82,11 @@ class DfFormating:
         self.create_df()
 
     def create_df(self):
+        """
+        :input: pd.DataFrame
+        Create standardized DataFrame
+        :output: pd.DataFrame
+        """
 
         df = self.final_df
         new_df = pd.DataFrame(columns=self.index)
@@ -87,6 +105,11 @@ class DfFormating:
         self.co2_type_converter()
 
     def co2_type_converter(self):
+        """
+        input: pd.DataFrame
+        Generates a new columns containing elements compatible with co2 calculator
+        :return: csv file
+        """
 
         df = self.final_df
         df['Type_calc'] = df["Type"].map(self.types).fillna('Others')
