@@ -24,3 +24,12 @@ of a tool that standardises the different sources could change everything by fin
 possibility of reporting.
 
 ## Our solution
+
+The approach we took is creating a pipeline that standardize the data from the different excel files, saving them into a database from which it will be possible to create reporting and data visualizations.
+
+The solutions is comprised of the following parts:
+- Interface
+- API
+- Data cleaning and manipulation
+- Database
+- Visualization tool
