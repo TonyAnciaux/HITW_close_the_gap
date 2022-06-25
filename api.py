@@ -43,7 +43,7 @@ def upload_file():
             print('empty file name')
             return redirect(request.url)
         if file and allowed_file(file.filename):
-            os.mkdir('uploads')
+            os.makedirs('uploads')
             filename = secure_filename(file.filename)
             dname = request.form['dname']
             file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
