@@ -69,7 +69,7 @@ class DfFormating:
         del (donor_name[:3], donor_name[-2:])
         df["Donor"] = " ".join(donor_name)
         self.final_df = df
-        self.create_df()
+        return self.create_df()
 
     def tes_parsing(self):
         """
@@ -96,13 +96,13 @@ class DfFormating:
                     new_df[k] = df[i]
                 except KeyError:
                     continue
-
         if self.donor is None:
             new_df["Donor"] = self.donor
 
         new_df = new_df.replace("-", np.nan)
         self.final_df = new_df
         self.co2_type_converter()
+        return self.final_df
 
     def co2_type_converter(self):
         """
@@ -114,5 +114,22 @@ class DfFormating:
         df = self.final_df
         df['Type_calc'] = df["Type"].map(self.types).fillna('Others')
         self.final_df = df
+        self.final_df.to_csv('uploads/final_df.csv', index=False)
 
-        return self.final_df
+    def sql_tables(self):
+        """
+        :input: final common dataframe
+        :output: separated tables
+        """
+        Device = self.final_df[["Serial Number", "Type", "Brand", "Model", "Processor", "RAM", "HDD", "Display",
+                                 "Weight", "TypeCalculator", "Quantity"]]
+        DeviceDonor = self.final_df[["Donor", "Serial Number"]].reset_index()
+        DeviceDonor = DeviceDonor.rename(columns={'index': "DonorID"})
+        Reference = self.final_df[["Serial Number", "Asset Tag", "Reference"]]
+        DeviceStatus = self.final_df[["Serial Number", "Grade", "Defects", "Disk Status"]]
+
+        Device.to_csv("uploads/Device.csv", index=False)
+        DeviceDonor.to_csv("uploads/DeviceDonor.csv", index=False)
+        Reference.to_csv("uploads/Reference.csv", index=False)
+        DeviceStatus.to_csv("uploads/DeviceStatus.csv", index=False)
+        
