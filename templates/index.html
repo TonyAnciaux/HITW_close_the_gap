@@ -1,7 +1,9 @@
 <!doctype html>
 <title>Upload an excel file</title>
- <h1>Excel file upload (xlsx, xls)</h1>
+ <h1>Excel file upload (only xlsx, xls)</h1>
     <form action="" method=post enctype=multipart/form-data>
-      <p><input type=file name=file>
-         <input type=submit value=Upload>
+      <p><input type=file name=file required>
+        <label for="dname">Donor name:</label>
+        <input type="text" id="dname" name="dname" required><br>
+        <input type=submit value=Upload>
     </form>
