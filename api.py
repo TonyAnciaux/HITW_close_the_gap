@@ -12,16 +12,17 @@ from utils.preprocessing import DfFormating
 
 
 UPLOAD_FOLDER = "uploads"
-
 ALLOWED_EXTENSIONS = {'xls', 'xlsx'}
 
 app = Flask(__name__)
+
+
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.secret_key = 'kivanc'
 
 @app.route("/", methods=['GET', 'POST'])
 def home():
-    return render_template("welcome.html")
+    return render_template('welcome.html')
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -43,7 +44,7 @@ def upload_file():
             print('empty file name')
             return redirect(request.url)
         if file and allowed_file(file.filename):
-            os.makedirs('uploads')
+            os.makedirs(name='uploads', exist_ok=True)
             filename = secure_filename(file.filename)
             dname = request.form['dname']
             file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
